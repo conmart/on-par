@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { AuthProvider } from "../services/auth";
 import NavBar from "./navBar";
 
 export default function Layout({ children, title = 'testing' }) {
@@ -8,8 +9,10 @@ export default function Layout({ children, title = 'testing' }) {
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <NavBar />
-      {children}
+      <AuthProvider>
+        <NavBar />
+        {children}
+      </AuthProvider>
     </div>
   );
 }
