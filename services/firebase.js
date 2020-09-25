@@ -2,9 +2,6 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth';
 
 import { firebaseConfig } from './firebaseConfig';
-// export const firebaseApp = firebase.initializeApp(firebaseConfig);
-
-// const googleAuthProvider = new firebase.auth.googleAuthProvider();
 
 try {
   firebase.initializeApp(firebaseConfig)
@@ -19,6 +16,6 @@ try {
 export const firebaseApp = firebase;
 
 export const signInWithGoogle = () => {
-  console.log('tried google log in')
-  // firebaseApp.auth().signInWithPopup(googleAuthProvider);
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+  firebaseApp.auth().signInWithPopup(googleProvider);
 };

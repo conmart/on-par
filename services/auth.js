@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     firebaseApp.auth().onAuthStateChanged(setCurrentUser);
-    // console.log('ranEffect')
+    console.log('ranEffect')
   }, []);
 
   return (
