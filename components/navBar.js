@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '../services/auth';
-import { signInWithGoogle } from '../services/firebase';
+import { signInWithGoogle, signOut } from '../services/firebase';
 
 export default function NavBar() {
   const { currentUser } = useContext(AuthContext);
@@ -11,7 +11,7 @@ export default function NavBar() {
       {currentUser ? (
         <div>
         <span>User logged in</span>
-        <button>Sign out</button>
+        <button onClick={signOut}>Sign out</button>
         </div>
       ) : (
         <button onClick={signInWithGoogle}>sign In</button>

@@ -2,7 +2,7 @@ import Head from "next/head";
 import { AuthProvider } from "../services/auth";
 import NavBar from "./navBar";
 
-export default function Layout({ children, title = 'testing' }) {
+export default function Layout({ children, title = 'OnPar' }) {
   return (
     <div>
       <Head>

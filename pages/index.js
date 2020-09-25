@@ -2,8 +2,8 @@ import Layout from '../components/layout';
 
 export default function Home() {
   return (
-    <Layout title="New Test">
+    <Layout>
       <div>This is index</div>
     </Layout>
-  )
+  );
 }

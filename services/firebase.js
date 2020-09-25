@@ -4,7 +4,7 @@ import 'firebase/auth';
 import { firebaseConfig } from './firebaseConfig';
 
 try {
-  firebase.initializeApp(firebaseConfig)
+  firebase.initializeApp(firebaseConfig);
 } catch (err) {
   // we skip the "already exists" message which is
   // not an actual error when we're hot-reloading
@@ -15,7 +15,11 @@ try {
 
 export const firebaseApp = firebase;
 
-export const signInWithGoogle = () => {
+export const signInWithGoogle = async () => {
   const googleProvider = new firebase.auth.GoogleAuthProvider();
-  firebaseApp.auth().signInWithPopup(googleProvider);
+  await firebaseApp.auth().signInWithPopup(googleProvider);
+};
+
+export const signOut = async () => {
+  await firebaseApp.auth().signOut();
 };
