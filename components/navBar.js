@@ -4,7 +4,7 @@ import { signInWithGoogle, signOut } from '../services/firebase';
 
 export default function NavBar() {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser, 'currentUser');
+  // console.log(currentUser, 'currentUser');
   return (
     <div>
       <div>this will be a navbar</div>
