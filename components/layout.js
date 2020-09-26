@@ -1,6 +1,7 @@
-import Head from "next/head";
-import { AuthProvider } from "../services/auth";
-import NavBar from "./navBar";
+import { Box } from '@chakra-ui/core';
+import Head from 'next/head';
+import { AuthProvider } from '../services/auth';
+import NavBar from './navBar';
 
 export default function Layout({ children, title = 'OnPar' }) {
   return (
@@ -11,7 +12,7 @@ export default function Layout({ children, title = 'OnPar' }) {
       </Head>
       <AuthProvider>
         <NavBar />
-        {children}
+        <Box p={3}>{children}</Box>
       </AuthProvider>
     </div>
   );
