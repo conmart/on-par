@@ -12,7 +12,11 @@ export default function Layout({ children, title = 'OnPar' }) {
       </Head>
       <AuthProvider>
         <NavBar />
-        <Box p={3}>{children}</Box>
+        <Box p={4}>
+          <Box maxW={1000} m="auto">
+            {children}
+          </Box>
+        </Box>
       </AuthProvider>
     </div>
   );

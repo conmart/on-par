@@ -20,6 +20,6 @@ export const signInWithGoogle = async () => {
   await firebaseApp.auth().signInWithPopup(googleProvider);
 };
 
-export const signOut = async () => {
+export const signUserOut = async () => {
   await firebaseApp.auth().signOut();
 };

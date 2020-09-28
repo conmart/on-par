@@ -1,13 +1,26 @@
 import { Flex, Button, Text } from '@chakra-ui/core';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthContext } from '../services/auth';
-import { signInWithGoogle, signOut } from '../services/firebase';
+import { signInWithGoogle, signUserOut } from '../services/firebase';
 
 export default function NavBar() {
   const { currentUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+
+  const signIn = async () => {
+    setLoading(true);
+    await signInWithGoogle();
+    setLoading(false);
+  };
+
+  const signOut = async () => {
+    setLoading(true);
+    await signUserOut();
+    setLoading(false);
+  }
 
   return (
-    <Flex position="sticky" top={0} bg="green.600" p={4}>
+    <Flex position="sticky" top={0} bg="green.500" p={4}>
       <Flex
         m="auto"
         maxW={1000}
@@ -18,20 +31,27 @@ export default function NavBar() {
         <Text fontSize="2em" color="white">
           OnPar
         </Text>
-        <Flex>
-          {currentUser ? (
-            <Button variantColor="pink" onClick={async () => await signOut()}>
-              Sign out
-            </Button>
-          ) : (
+        {currentUser ? (
+          <Flex>
             <Button
-              variantColor="pink"
-              onClick={async () => await signInWithGoogle()}
+              variantColor="blue"
+              onClick={() => console.log('clicked profile')}
+              variant="link"
+              mr={2}
+              p={2}
+              color="white"
             >
-              sign In
+              Profile
             </Button>
-          )}
-        </Flex>
+            <Button variantColor="blue" onClick={signOut} isLoading={loading}>
+              Sign Out
+            </Button>
+          </Flex>
+        ) : (
+          <Button variantColor="blue" onClick={signIn} isLoading={loading}>
+            Sign In
+          </Button>
+        )}
       </Flex>
     </Flex>
   );
