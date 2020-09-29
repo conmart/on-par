@@ -1,9 +1,23 @@
+import { Button, Text } from '@chakra-ui/core';
+import { useEffect, useState } from 'react';
 import Layout from '../components/layout';
+import { createNewCourse, getAllCourses } from '../services/firebase';
 
 export default function Home() {
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    getAllCourses().then((courses) => setCourses(courses));
+  }, [])
+
+  console.log(courses)
+
   return (
     <Layout>
-      <div>This is index</div>
+      <Text fontSize="2em">All Courses</Text>
+      {courses.map((course) => {
+        return <div key={course.id}>{course.name}</div>;
+      })}
     </Layout>
   );
 }
