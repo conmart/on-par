@@ -11,8 +11,6 @@ export default function Home() {
     getAllCourses().then((courses) => setCourses(courses));
   }, [])
 
-  console.log(courses)
-
   return (
     <Layout>
       <Text fontSize="2em">All Courses</Text>
