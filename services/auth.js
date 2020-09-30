@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { firebaseApp } from './firebase';
 
 export const AuthContext = createContext();
@@ -16,3 +16,5 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   )
 };
+
+export const useCurrentUser = () => useContext(AuthContext);

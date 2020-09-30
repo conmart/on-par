@@ -1,10 +1,10 @@
 import { Flex, Button, Text } from '@chakra-ui/core';
-import { useContext, useState } from 'react';
-import { AuthContext } from '../services/auth';
+import { useState } from 'react';
+import { useCurrentUser } from '../services/auth';
 import { signInWithGoogle, signUserOut } from '../services/firebase';
 
 export default function NavBar() {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useCurrentUser();
   const [loading, setLoading] = useState(false);
 
   const signIn = async () => {

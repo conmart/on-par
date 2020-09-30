@@ -1,19 +1,17 @@
 import { Button, Text } from '@chakra-ui/core';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useContext } from 'react';
 import Layout from '../../components/layout';
-import { AuthContext } from '../../services/auth';
+import { useCurrentUser } from '../../services/auth';
 
 export default function NewCourse() {
-  const fac = useContext(AuthContext);
-
-  console.log(fac)
+  const { currentUser } = useCurrentUser();
+  console.log(currentUser.displayName)
 
   return (
     <Layout title="Create New Course">
       <Text fontSize="2em">Create a new course</Text>
       <Formik
-      initialValues={{ name: '' }}
+      initialValues={{ name: '', author: 'test' }}
       validate={values => {
         const errors = {};
         if (!values.name) {
