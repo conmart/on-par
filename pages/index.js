@@ -2,7 +2,7 @@ import { Button, Text, Link } from '@chakra-ui/core';
 import { useEffect, useState } from 'react';
 import NextLink from 'next/link';
 import Layout from '../components/layout';
-import { createNewCourse, getAllCourses } from '../services/firebase';
+import { getAllCourses } from '../services/firebase';
 
 export default function Home() {
   const [courses, setCourses] = useState([]);

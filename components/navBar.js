@@ -1,5 +1,6 @@
-import { Flex, Button, Text } from '@chakra-ui/core';
+import { Flex, Button, Text, Link } from '@chakra-ui/core';
 import { useState } from 'react';
+import NextLink from 'next/link';
 import { useCurrentUser } from '../services/auth';
 import { signInWithGoogle, signUserOut } from '../services/firebase';
 
@@ -28,13 +29,14 @@ export default function NavBar() {
         w="100%"
         align="center"
       >
-        <Text fontSize="2em" color="white">
-          OnPar
-        </Text>
+        <NextLink href="/">
+          <Text as={Link} fontSize="2em" color="white">
+            OnPar
+          </Text>
+        </NextLink>
         {currentUser ? (
           <Flex>
             <Button
-              variantColor="blue"
               onClick={() => console.log('clicked profile')}
               variant="link"
               mr={2}

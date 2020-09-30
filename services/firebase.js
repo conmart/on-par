@@ -45,6 +45,6 @@ export const getAllCourses = async () => {
   return buildResourceList(courses);
 }
 
-export const createNewCourse = async (newCourse) => {
+export const createCourse = async (newCourse) => {
   await db.collection('courses').add(newCourse);
 };
