@@ -1,5 +1,6 @@
-import { Button, Text } from '@chakra-ui/core';
+import { Button, Text, Link } from '@chakra-ui/core';
 import { useEffect, useState } from 'react';
+import NextLink from 'next/link';
 import Layout from '../components/layout';
 import { createNewCourse, getAllCourses } from '../services/firebase';
 
@@ -18,6 +19,9 @@ export default function Home() {
       {courses.map((course) => {
         return <div key={course.id}>{course.name}</div>;
       })}
+      <NextLink href="/course/create-course">
+        <Button as={Link}>Create new course</Button>
+      </NextLink>
     </Layout>
   );
 }
