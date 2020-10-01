@@ -1,8 +1,10 @@
 import { Button, Text } from '@chakra-ui/core';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
+import InputField from '../../components/InputField';
 import Layout from '../../components/layout';
 import { useCurrentUser } from '../../services/auth';
 import { createCourse } from '../../services/firebase';
+import { holes } from './utils';
 
 export default function NewCourse() {
   const { currentUser } = useCurrentUser();
@@ -10,7 +12,7 @@ export default function NewCourse() {
   return (
     <Layout title="Create New Course">
       <Text fontSize="2em">Create a new course</Text>
-      <Formik
+      {currentUser ? (<Formik
         initialValues={{
           name: '',
           author_id: currentUser.uid,
@@ -30,18 +32,23 @@ export default function NewCourse() {
           }, 500);
         }}
       >
-        {({ isSubmitting }) => {
+        {({ isSubmitting, values }) => {
           return (
             <Form>
-              <Field name="name" />
-              <ErrorMessage name="name" component="div" />
+              <InputField
+                name="name"
+                placeholder="New Golf Course"
+                label="Course Name"
+              />
               <Button type="submit" isLoading={isSubmitting}>
                 Create Course
               </Button>
             </Form>
           );
         }}
-      </Formik>
+      </Formik>) : (
+        <Text>You must be logged in to create a course.</Text>
+      )}
     </Layout>
   );
 }
