@@ -1,17 +1,17 @@
 export const holes = [
   {
     number: 1,
-    yards: null,
-    par: null,
+    yards: '',
+    par: 3,
   },
   {
     number: 2,
-    yards: null,
-    par: null,
+    yards: '',
+    par: '',
   },
   {
     number: 3,
-    yards: null,
-    par: null,
+    yards: '',
+    par: '',
   },
 ];
