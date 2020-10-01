@@ -1,74 +1,66 @@
-import { Box, Button, Flex, Text } from '@chakra-ui/core';
-import { Form, Formik } from 'formik';
-import InputField from '../../components/InputField';
-import Layout from '../../components/layout';
+import { Box, Button, Flex, Radio, RadioGroup, Text } from '@chakra-ui/core';
+import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
 import { createCourse } from '../../services/firebase';
-import { holes } from '../../components/course/utils';
+import { shortCourse, regCourse } from '../../components/course/utils';
+import CourseForm from '../../components/course/CourseForm';
+import { useState } from 'react';
+import { Formik, Form } from 'formik';
+import InputField from '../../components/InputField';
 
 export default function NewCourse() {
   const { currentUser } = useCurrentUser();
+  const [holeCount, setHoleCount] = useState('');
+  // see if above will work ^^^
+
+  const saveCourse = (values) => {
+    console.log(values, 'endvalues');
+  };
+
+  const holes = holeCount === 'short' ? shortCourse : regCourse;
 
   return (
     <Layout title="Create New Course">
       <Text fontSize="2em">Create a new course</Text>
       {currentUser ? (
-        <Formik
-          initialValues={{
-            name: '',
-            author_id: currentUser.uid,
-            author_name: currentUser.displayName,
-            holes,
-          }}
-          validate={(values) => {
-            const errors = {};
-            if (!values.name) {
-              errors.name = 'Name is required';
-            }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              console.log(values, 'endvalues')
-              // createCourse(values);
-              setSubmitting(false);
-            }, 500);
-          }}
-        >
-          {({ isSubmitting, values }) => {
-            return (
+        <>
+          <RadioGroup
+            onChange={(e) => setHoleCount(e.target.value)}
+            value={holeCount}
+          >
+            <Radio value="short">9 Holes</Radio>
+            <Radio value="reg">18 Holes</Radio>
+          </RadioGroup>
+          {holeCount && (
+            <Formik
+              initialValues={{
+                name: '',
+                author_id: currentUser.uid,
+                author_name: currentUser.displayName,
+                holes,
+              }}
+              validate={(values) => {
+                const errors = {};
+                if (!values.name) {
+                  errors.name = 'Name is required';
+                }
+                return errors;
+              }}
+              onSubmit={(values, { setSubmitting }) => {
+                setTimeout(() => {
+                  saveCourse(values);
+                  setSubmitting(false);
+                }, 500);
+              }}
+              validateOnChange={false}
+              validateOnBlur={false}
+            >
               <Form>
-                <InputField
-                  name="name"
-                  placeholder="New Golf Course"
-                  label="Course Name"
-                />
-                {values.holes.map((hole, i) => (
-                  <Box key={i}>
-                    <Text>{'Hole ' + hole.number}</Text>
-                    <Flex>
-                      <InputField
-                        name={`holes[${i}].par`}
-                        placeholder={3}
-                        label="Par"
-                        type='number'
-                      />
-                      <InputField
-                        name={`holes[${i}].yards`}
-                        placeholder=''
-                        label="Yards"
-                        type='number'
-                      />
-                    </Flex>
-                  </Box>
-                ))}
-                <Button type="submit" isLoading={isSubmitting}>
-                  Create Course
-                </Button>
+                <CourseForm holes={holes} />
               </Form>
-            );
-          }}
-        </Formik>
+            </Formik>
+          )}
+        </>
       ) : (
         <Text>You must be logged in to create a course.</Text>
       )}

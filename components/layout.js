@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/core';
 import Head from 'next/head';
-import NavBar from './navBar';
+import NavBar from './NavBar';
 
 export default function Layout({ children, title = 'OnPar' }) {
   return (
