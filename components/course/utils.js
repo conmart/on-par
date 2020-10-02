@@ -7,12 +7,12 @@ export const shortCourse = [
   {
     number: 2,
     yards: '',
-    par: '',
+    par: 3,
   },
   {
     number: 3,
     yards: '',
-    par: '',
+    par: 3,
   },
 ];
 
@@ -25,21 +25,21 @@ export const regCourse = [
   {
     number: 2,
     yards: '',
-    par: '',
+    par: 3,
   },
   {
     number: 3,
     yards: '',
-    par: '',
+    par: 3,
   },
   {
     number: 4,
     yards: '',
-    par: '',
+    par: 3,
   },
   {
     number: 5,
     yards: '',
-    par: '',
+    par: 3,
   },
 ];

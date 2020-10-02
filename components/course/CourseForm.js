@@ -2,11 +2,10 @@ import { Box, Button, Flex, Text } from '@chakra-ui/core';
 import { useFormikContext } from 'formik';
 import { Fragment, useEffect } from 'react';
 import InputField from '../InputField';
+import NumInput from '../NumInput';
 
 export default function CourseForm({ holes }) {
-  console.log(holes, 'holes')
   const { values, isSubmitting, setFieldValue } = useFormikContext();
-  // console.log(fc)
 
   useEffect(() => {
     setFieldValue('holes', holes)
@@ -23,17 +22,16 @@ export default function CourseForm({ holes }) {
         <Box key={i}>
           <Text>{'Hole ' + hole.number}</Text>
           <Flex>
-            <InputField
+            <NumInput
               name={`holes[${i}].par`}
-              placeholder={3}
               label="Par"
-              type="number"
+              min={1}
+              max={7}
+              includeStepper
             />
-            <InputField
+            <NumInput
               name={`holes[${i}].yards`}
-              placeholder=""
               label="Yards"
-              type="number"
             />
           </Flex>
         </Box>
