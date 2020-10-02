@@ -1,26 +1,33 @@
 import { Box, Button, Flex, Text } from '@chakra-ui/core';
 import { useFormikContext } from 'formik';
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import InputField from '../InputField';
 import NumInput from '../NumInput';
 
-export default function CourseForm({ holes }) {
+export default function CourseForm({ holeCount }) {
   const { values, isSubmitting, setFieldValue } = useFormikContext();
 
   useEffect(() => {
-    setFieldValue('holes', holes)
-  }, [holes])
+    const { holes } = values
+    if (holeCount > holes.length) {
+      const diff = holeCount - holes.length
+      const additionalHoles = new Array(diff).fill({ yards: '', par: 3 });
+      setFieldValue('holes', holes.concat(additionalHoles))
+    } else if (holeCount < holes.length) {
+      setFieldValue('holes', holes.slice(0, holeCount))
+    }
+  }, [holeCount])
 
   return (
-    <Fragment>
+    <>
       <InputField
         name="name"
         placeholder="New Golf Course"
         label="Course Name"
       />
-      {values.holes.map((hole, i) => (
+      {values.holes.map((_, i) => (
         <Box key={i}>
-          <Text>{'Hole ' + hole.number}</Text>
+          <Text>{'Hole ' + (i + 1)}</Text>
           <Flex>
             <NumInput
               name={`holes[${i}].par`}
@@ -39,6 +46,6 @@ export default function CourseForm({ holes }) {
       <Button type="submit" isLoading={isSubmitting}>
         Create Course
       </Button>
-    </Fragment>
+    </>
   );
 }

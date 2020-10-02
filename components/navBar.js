@@ -21,7 +21,7 @@ export default function NavBar() {
   }
 
   return (
-    <Flex position="sticky" top={0} bg="green.500" p={4}>
+    <Flex position="sticky" top={0} bg="green.500" p={4} zIndex={2}>
       <Flex
         m="auto"
         maxW={1000}

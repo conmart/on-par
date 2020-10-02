@@ -26,7 +26,7 @@ export default function NumInput({ label, includeStepper, ...props }) {
           setFieldValue(field.name, newValue);
         }}
       >
-        <NumberInputField type="number" />
+        <NumberInputField type="number" name={field.name} />
         {includeStepper && (
           <NumberInputStepper>
             <NumberIncrementStepper />
