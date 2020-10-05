@@ -27,7 +27,7 @@ export const signUserOut = async () => {
   await firebaseApp.auth().signOut();
 };
 
-const db = firebase.firestore();
+export const db = firebase.firestore();
 
 const buildResourceList = (querySnapshot) => {
   const resourceList = [];
@@ -44,7 +44,3 @@ export const getAllCourses = async () => {
   const courses = await db.collection('courses').get();
   return buildResourceList(courses);
 }
-
-export const createCourse = async (newCourse) => {
-  await db.collection('courses').add(newCourse);
-};

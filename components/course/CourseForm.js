@@ -22,7 +22,6 @@ export default function CourseForm({ holeCount }) {
     <>
       <InputField
         name="name"
-        placeholder="New Golf Course"
         label="Course Name"
       />
       {values.holes.map((_, i) => (

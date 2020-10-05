@@ -1,22 +1,37 @@
-import { Radio, RadioGroup, Text } from '@chakra-ui/core';
+import { Radio, RadioGroup, Text, useToast } from '@chakra-ui/core';
 import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
-import { createCourse } from '../../services/firebase';
+import { db } from '../../services/firebase';
 import CourseForm from '../../components/course/CourseForm';
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
+import { useRouter } from 'next/router';
 
 export default function NewCourse() {
+  const router = useRouter();
+  const toast = useToast();
   const { currentUser } = useCurrentUser();
   const [holeCount, setHoleCount] = useState(18);
 
-  const saveCourse = (values) => {
+  const saveCourse = async (values) => {
     const totalPar = values.holes.reduce(
       (acc, currVal) => acc + currVal.par,
       0
     );
     values['total_par'] = totalPar;
-    console.log(values, 'endvalues');
+    values['hole_count'] = values.holes.length;
+  
+    try {
+      await db.collection('courses').add(values);
+      router.push('/')
+    } catch(err) {
+      return toast({
+        title: 'An error occurred',
+        description: 'Something went wrong creating your course.',
+        status: 'error',
+        isClosable: true,
+      })
+    }
   };
 
   return (
@@ -45,11 +60,9 @@ export default function NewCourse() {
               }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                saveCourse(values);
-                setSubmitting(false);
-              }, 500);
+            onSubmit={async (values, { setSubmitting }) => {
+              await saveCourse(values);
+              setSubmitting(false);
             }}
             validateOnChange={false}
             validateOnBlur={false}
