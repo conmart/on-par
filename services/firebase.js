@@ -44,3 +44,8 @@ export const getAllCourses = async () => {
   const courses = await db.collection('courses').get();
   return buildResourceList(courses);
 }
+
+export const getSingleCourse = async (courseId) => {
+  const course = await db.collection('courses').doc(courseId).get();
+  return course.data();
+}

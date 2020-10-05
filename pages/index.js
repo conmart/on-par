@@ -9,15 +9,38 @@ export default function Home() {
 
   useEffect(() => {
     getAllCourses().then((courses) => setCourses(courses));
-  }, [])
+  }, []);
 
   return (
     <Layout>
       <Text fontSize="2em">All Courses</Text>
-      {courses.map((course) => {
-        return <div key={course.id}>{course.name}</div>;
-      })}
-      <NextLink href="/course/create-course">
+      <table>
+        <thead>
+          <tr>
+            <th>Course Name</th>
+            <th>Holes</th>
+            <th>Par</th>
+          </tr>
+        </thead>
+        <tbody>
+          {courses.map((course) => {
+            return (
+              <NextLink
+                key={course.id}
+                href={"/courses/[id]"}
+                as={`/courses/${course.id}`}
+              >
+                <tr>
+                  <td>{course['name']}</td>
+                  <td>{course['hole_count']}</td>
+                  <td>{course['total_par']}</td>
+                </tr>
+              </NextLink>
+            );
+          })}
+        </tbody>
+      </table>
+      <NextLink href="/courses/create-course">
         <Button as={Link}>Create new course</Button>
       </NextLink>
     </Layout>
