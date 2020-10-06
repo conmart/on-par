@@ -16,7 +16,6 @@ try {
 
 export const firebaseApp = firebase;
 
-
 // User Sign in
 export const signInWithGoogle = async () => {
   const googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -35,17 +34,17 @@ const buildResourceList = (querySnapshot) => {
     const data = doc.data();
     data['id'] = doc.id;
     resourceList.push(data);
-  })
-  return resourceList
-}
+  });
+  return resourceList;
+};
 
 // Courses
 export const getAllCourses = async () => {
   const courses = await db.collection('courses').get();
   return buildResourceList(courses);
-}
+};
 
 export const getSingleCourse = async (courseId) => {
   const course = await db.collection('courses').doc(courseId).get();
   return course.data();
-}
+};
