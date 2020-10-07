@@ -6,6 +6,7 @@ import CourseForm from '../../components/course/CourseForm';
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import { useRouter } from 'next/router';
+import { sumPar } from '../../services/helpers';
 
 export default function NewCourse() {
   const router = useRouter();
@@ -14,23 +15,19 @@ export default function NewCourse() {
   const [holeCount, setHoleCount] = useState(18);
 
   const saveCourse = async (values) => {
-    const totalPar = values.holes.reduce(
-      (acc, currVal) => acc + currVal.par,
-      0
-    );
-    values['total_par'] = totalPar;
+    values['total_par'] = sumPar(values.holes);
     values['hole_count'] = values.holes.length;
-  
+
     try {
-      await db.collection('courses').add(values);
-      router.push('/')
-    } catch(err) {
+      const courseRef = await db.collection('courses').add(values);
+      router.push(`/courses/${courseRef.id}`);
+    } catch (err) {
       return toast({
         title: 'An error occurred',
         description: 'Something went wrong creating your course.',
         status: 'error',
         isClosable: true,
-      })
+      });
     }
   };
 
@@ -68,7 +65,7 @@ export default function NewCourse() {
             validateOnBlur={false}
           >
             <Form>
-              <CourseForm holeCount={holeCount} />
+              <CourseForm submitText="Create Course" holeCount={holeCount} />
             </Form>
           </Formik>
         </>

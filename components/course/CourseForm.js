@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import InputField from '../InputField';
 import NumInput from '../NumInput';
 
-export default function CourseForm({ holeCount }) {
+export default function CourseForm({ submitText, holeCount }) {
   const { values, isSubmitting, setFieldValue } = useFormikContext();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ export default function CourseForm({ holeCount }) {
         </Box>
       ))}
       <Button type="submit" isLoading={isSubmitting}>
-        Create Course
+        {submitText}
       </Button>
     </>
   );

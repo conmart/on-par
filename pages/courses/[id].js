@@ -1,5 +1,6 @@
-import { Box, Button, Flex, Text, useToast } from '@chakra-ui/core';
+import { Box, Button, Flex, Text, useToast, Link } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
 import { db } from '../../services/firebase';
@@ -12,6 +13,7 @@ export default function Course() {
   const { course, loading, error } = useCourseFromQuery();
   const isAuthor = course && course.author_id === currentUser?.uid;
 
+  // TODO: Protect delete with alert dialogue
   const deleteCourse = async () => {
     try {
       await db.collection('courses').doc(course.id).delete();
@@ -79,7 +81,14 @@ export default function Course() {
               <Button>New Round</Button>
               {isAuthor && (
                 <>
-                  <Button mt={2}>Edit Course</Button>
+                  <NextLink
+                    href={'/courses/edit/[id]'}
+                    as={`/courses/edit/${course.id}`}
+                  >
+                    <Button as={Link} mt={2}>
+                      Edit Course
+                    </Button>
+                  </NextLink>
                   <Button onClick={deleteCourse} variantColor="red" mt={2}>
                     Delete Course
                   </Button>
