@@ -1,39 +1,31 @@
 import { Box, Button, Flex, Text, useToast } from '@chakra-ui/core';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
-import { db, getSingleCourse } from '../../services/firebase';
+import { db } from '../../services/firebase';
+import { userMadeCourse } from '../../services/isAuthor';
+import { useCourseFromQuery } from '../../services/useCourseFromQuery';
 
 export default function Course() {
   const toast = useToast();
   const router = useRouter();
   const { currentUser } = useCurrentUser();
-  const [course, setCourse] = useState(null);
-
-  useEffect(() => {
-    const { id: courseId } = router.query;
-    if (courseId) {
-      getSingleCourse(courseId).then((course) => setCourse(course));
-    }
-  }, [router.query]);
+  const course = useCourseFromQuery();
+  const isAuthor = userMadeCourse(currentUser, course)
 
   const deleteCourse = async () => {
     try {
-      await db.collection('courses').doc(router.query.id).delete();
+      await db.collection('courses').doc(course.id).delete();
       router.push('/');
     } catch (err) {
       return toast({
         title: 'An error occurred',
-        description: 'Something went wrong creating your course.',
+        description: 'Something went wrong deleting your course.',
         status: 'error',
         isClosable: true,
       });
     }
   };
-
-  const isAuthor =
-    course && currentUser && currentUser.uid === course.author_id;
 
   return (
     <Layout>
