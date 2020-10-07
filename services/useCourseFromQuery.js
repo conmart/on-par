@@ -4,6 +4,8 @@ import { getSingleCourse } from './firebase';
 
 export const useCourseFromQuery = () => {
   const [course, setCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -12,9 +14,10 @@ export const useCourseFromQuery = () => {
       getSingleCourse(courseId).then((course) => {
         course.id = courseId;
         setCourse(course);
-      });
+      }).catch(() => setError(true));
+      setLoading(false)
     }
   }, [router.query]);
 
-  return course;
+  return { course, loading, error };
 };

@@ -3,15 +3,14 @@ import { useRouter } from 'next/router';
 import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
 import { db } from '../../services/firebase';
-import { userMadeCourse } from '../../services/isAuthor';
 import { useCourseFromQuery } from '../../services/useCourseFromQuery';
 
 export default function Course() {
   const toast = useToast();
   const router = useRouter();
   const { currentUser } = useCurrentUser();
-  const course = useCourseFromQuery();
-  const isAuthor = userMadeCourse(currentUser, course)
+  const { course, loading, error } = useCourseFromQuery();
+  const isAuthor = course && course.author_id === currentUser?.uid;
 
   const deleteCourse = async () => {
     try {
@@ -26,6 +25,22 @@ export default function Course() {
       });
     }
   };
+
+  if (loading) {
+    return (
+      <Layout>
+        <Box>...loading</Box>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <Box>Unable to find this golf course</Box>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
