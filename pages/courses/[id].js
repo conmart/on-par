@@ -5,6 +5,7 @@ import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
 import { db } from '../../services/firebase';
 import { useCourseFromQuery } from '../../services/useCourseFromQuery';
+import { toastError } from '../../services/helpers';
 
 export default function Course() {
   const toast = useToast();
@@ -20,11 +21,25 @@ export default function Course() {
       router.push('/');
     } catch (err) {
       return toast({
-        title: 'An error occurred',
+        ...toastError,
         description: 'Something went wrong deleting your course.',
-        status: 'error',
-        isClosable: true,
       });
+    }
+  };
+
+  const newRound = async () => {
+    const round = {
+      user_id: currentUser.uid,
+      course_id: course.id,
+      created_at: Date.now(),
+      holes: new Array(course.hole_count).fill({ score: '' })
+    };
+    try {
+      const roundRef = await db.collection('rounds').add(round);
+      router.push(`/rounds/${roundRef.id}`);
+    } catch(err) {
+      console.log(err, 'newRound Errr')
+      return toast({ ...toastError, description: 'Unable to create new round'});
     }
   };
 
@@ -78,7 +93,9 @@ export default function Course() {
           </Box>
           {currentUser && (
             <Flex direction="column">
-              <Button>New Round</Button>
+              <Button as={Link} onClick={newRound}>
+                New Round
+              </Button>
               {isAuthor && (
                 <>
                   <NextLink
