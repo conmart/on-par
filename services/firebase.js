@@ -48,3 +48,9 @@ export const getSingleCourse = async (courseId) => {
   const course = await db.collection('courses').doc(courseId).get();
   return course.data();
 };
+
+// Rounds
+export const getSingleRound = async (roundId) => {
+  const round = await db.collection('rounds').doc(roundId).get();
+  return round.data();
+}

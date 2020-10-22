@@ -4,14 +4,14 @@ import NextLink from 'next/link';
 import Layout from '../../components/Layout';
 import { useCurrentUser } from '../../services/auth';
 import { db } from '../../services/firebase';
-import { useCourseFromQuery } from '../../services/useCourseFromQuery';
+import { useResourceFromQuery } from '../../services/useResourceFromQuery';
 import { toastError } from '../../services/helpers';
 
 export default function Course() {
   const toast = useToast();
   const router = useRouter();
   const { currentUser } = useCurrentUser();
-  const { course, loading, error } = useCourseFromQuery();
+  const { resource: course, loading, error } = useResourceFromQuery();
   const isAuthor = course && course.author_id === currentUser?.uid;
 
   // TODO: Protect delete with alert dialogue
