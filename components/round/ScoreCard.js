@@ -1,7 +1,6 @@
 import { Box } from "@chakra-ui/core";
 
 export default function ScoreCard({ course, round }) {
-  console.log(course, round);
   return (
     <Box>
       <table>
@@ -13,12 +12,12 @@ export default function ScoreCard({ course, round }) {
           </tr>
         </thead>
         <tbody>
-          {course.holes.map(({ par }, i) => {
+          {course?.holes.map(({ par }, i) => {
             return (
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{par}</td>
-                <td>{round.holes[i].score}</td>
+                <td>{round?.holes[i].score}</td>
               </tr>
             );
           })}
