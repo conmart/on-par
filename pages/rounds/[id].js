@@ -6,6 +6,7 @@ import { useCurrentUser } from '../../services/auth';
 import { getSingleCourse, updateScore } from '../../services/firebase';
 import ScoreCard from '../../components/round/ScoreCard';
 import HoleScore from '../../components/round/HoleScore';
+import { caclulateScore, findNextHole } from '../../services/helpers';
 
 export default function Round() {
   const { resource: round, loading, error } = useResourceFromQuery(true);
@@ -25,15 +26,28 @@ export default function Round() {
   const saveHoleScore = async (holeScore) => {
     let newHoles = [...round.holes];
     newHoles[currentHole].score = holeScore;
-    console.log(newHoles);
+    updatedRound = { holes: newHoles };
+    const nextHole = findNextHole(newHoles);
+    if (!nextHole) {
+      updatedRound['finished'] = true;
+    }
     try {
-      await updateScore(round.id, newHoles);
-      // console.log(updatedRound)
-      setCurrentHole(currentHole + 1);
+      await updateScore(round.id, updatedRound);
+      goToNextHole(nextHole);
     } catch (err) {
       console.log(err)
     }
   };
+
+  const goToNextHole = (nextHole) => {
+    if (currentHole < 8) {
+      setCurrentHole(currentHole + 1);
+    } else if (nextHole) {
+      setCurrentHole(nextHole);
+    } else {
+      setShowScoreCard(true);
+    }
+  }
 
   if (loading || !isGolfer) {
     return (
@@ -51,24 +65,29 @@ export default function Round() {
     );
   }
 
+  const toggleText = showScoreCard ? 'Enter Score' : 'View ScoreCard';
   const date = new Date(round.created_at).toLocaleDateString();
+  const totalScore = caclulateScore(course.holes, round.holes);
+  console.log(totalScore, 'totalScore')
   return (
     <Layout title="Round">
-      <Text>{course?.name}</Text>
-      <Text>Date: {date}</Text>
-      {showScoreCard ? (
-        <ScoreCard course={course} round={round} />
-      ) : (
-        <HoleScore
-          course={course}
-          round={round}
-          currentHole={currentHole}
-          saveHoleScore={saveHoleScore}
-        />
-      )}
-      <Button onClick={() => setShowScoreCard(!showScoreCard)}>
-        toggle comps
-      </Button>
+      <Box w={300} textAlign='center' m='auto'>
+        <Text fontSize="2em">{course?.name}</Text>
+        <Text>Date: {date}</Text>
+        {showScoreCard ? (
+          <ScoreCard course={course} round={round} totalScore={totalScore} />
+        ) : (
+          <HoleScore
+            course={course}
+            round={round}
+            currentHole={currentHole}
+            saveHoleScore={saveHoleScore}
+          />
+        )}
+        <Button pt={2} onClick={() => setShowScoreCard(!showScoreCard)}>
+          {toggleText}
+        </Button>
+      </Box>
     </Layout>
   );
 }

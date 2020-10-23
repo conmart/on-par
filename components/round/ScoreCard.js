@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/core";
+import { Box, Flex, Text } from "@chakra-ui/core";
 
-export default function ScoreCard({ course, round }) {
+export default function ScoreCard({ course, round, totalScore }) {
   return (
-    <Box>
+    <Box w="100%">
       <table>
         <thead>
           <tr>
@@ -23,6 +23,10 @@ export default function ScoreCard({ course, round }) {
           })}
         </tbody>
       </table>
+      <Flex>
+        <Text>Total Score</Text>
+        <Text>{totalScore}</Text>
+      </Flex>
     </Box>
   );
 }

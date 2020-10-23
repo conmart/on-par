@@ -30,36 +30,40 @@ export default function HoleScore({
 
   return (
     <Box>
-      <Text>Hole: {currentHole + 1}</Text>
-      <Text>Par: {par}</Text>
+      <Flex justify="space-around" py={3}>
+        <Text fontSize={26}>Hole {currentHole + 1}</Text>
+        <Text fontSize={26}>Par: {par}</Text>
+      </Flex>
       <Text>Your Score:</Text>
-      <Flex>
-        <NumberInput
+      <Flex direction="column">
+        <IconButton
+          aria-label="increase score"
           size="lg"
-          onChange={(value) => {
-            if (value > 0) setScore(value);
-          }}
-          value={score}
-        >
-          <NumberInputField type="number" placeholder={par} />
-        </NumberInput>
-        <Flex direction="column">
-          <IconButton
-            aria-label="increase score"
+          onClick={() => changeScore(1)}
+          icon="triangle-up"
+        />
+        <Flex my={3} justify="space-between">
+          <NumberInput
+            w="45%"
             size="lg"
-            onClick={() => changeScore(1)}
-            icon="triangle-up"
-          />
-          <Button onClick={() => setScore(par)}>
+            onChange={(value) => {
+              if (value > 0) setScore(value);
+            }}
+            value={score}
+          >
+            <NumberInputField type="number" placeholder={par} />
+          </NumberInput>
+
+          <Button w="45%" size="lg" onClick={() => setScore(par)}>
             Par
           </Button>
-          <IconButton
-            aria-label="decrease score"
-            size="lg"
-            onClick={() => changeScore(-1)}
-            icon="triangle-down"
-          />
         </Flex>
+        <IconButton
+          aria-label="decrease score"
+          size="lg"
+          onClick={() => changeScore(-1)}
+          icon="triangle-down"
+        />
       </Flex>
       <Button onClick={() => saveHoleScore(score)}>Next Hole</Button>
     </Box>

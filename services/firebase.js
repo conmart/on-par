@@ -55,6 +55,6 @@ export const getSingleRound = async (roundId) => {
   return round.data();
 }
 
-export const updateScore = async (roundId, holes) => {
-  await db.collection('rounds').doc(roundId).update({ holes });
+export const updateScore = async (roundId, newData) => {
+  await db.collection('rounds').doc(roundId).update(newData);
 }
