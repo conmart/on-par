@@ -3,7 +3,7 @@ import { Box, Button, Text } from '@chakra-ui/core';
 import Layout from '../../components/Layout';
 import { useResourceFromQuery } from '../../services/useResourceFromQuery';
 import { useCurrentUser } from '../../services/auth';
-import { getSingleCourse } from '../../services/firebase';
+import { getSingleCourse, updateScore } from '../../services/firebase';
 import ScoreCard from '../../components/round/ScoreCard';
 import HoleScore from '../../components/round/HoleScore';
 
@@ -12,14 +12,28 @@ export default function Round() {
   const { currentUser } = useCurrentUser();
   const [course, setCourse] = useState(null);
   const [currentHole, setCurrentHole] = useState(0);
-  const [showScoreCard, setShowScoreCard] = useState(true);
+  const [showScoreCard, setShowScoreCard] = useState(false);
   const isGolfer = round && round.user_id === currentUser?.uid;
 
   useEffect(() => {
+    console.log('affected')
     if (round) {
       getSingleCourse(round.course_id).then((course) => setCourse(course));
     }
   }, [round]);
+
+  const saveHoleScore = async (holeScore) => {
+    let newHoles = [...round.holes];
+    newHoles[currentHole].score = holeScore;
+    console.log(newHoles);
+    try {
+      await updateScore(round.id, newHoles);
+      // console.log(updatedRound)
+      setCurrentHole(currentHole + 1);
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
   if (loading || !isGolfer) {
     return (
@@ -45,7 +59,12 @@ export default function Round() {
       {showScoreCard ? (
         <ScoreCard course={course} round={round} />
       ) : (
-        <HoleScore course={course} round={round} currentHole={currentHole} />
+        <HoleScore
+          course={course}
+          round={round}
+          currentHole={currentHole}
+          saveHoleScore={saveHoleScore}
+        />
       )}
       <Button onClick={() => setShowScoreCard(!showScoreCard)}>
         toggle comps
