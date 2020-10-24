@@ -16,7 +16,10 @@ export const findNextHole = (roundHoles) => {
   return false;
 }
 
-export const caclulateScore = (courseHoles, roundHoles) => {
+export const caclulateScore = (course, round) => {
+  if (!course || !round) return 'par';
+  const { holes: courseHoles } = course;
+  const { holes: roundHoles } = round;
   let totalScore = 0;
   for (let i = 0; i < roundHoles.length; i ++) {
     const score = roundHoles[i].score

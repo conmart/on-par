@@ -26,7 +26,7 @@ export default function Round() {
   const saveHoleScore = async (holeScore) => {
     let newHoles = [...round.holes];
     newHoles[currentHole].score = holeScore;
-    updatedRound = { holes: newHoles };
+    let updatedRound = { holes: newHoles };
     const nextHole = findNextHole(newHoles);
     if (!nextHole) {
       updatedRound['finished'] = true;
@@ -67,7 +67,7 @@ export default function Round() {
 
   const toggleText = showScoreCard ? 'Enter Score' : 'View ScoreCard';
   const date = new Date(round.created_at).toLocaleDateString();
-  const totalScore = caclulateScore(course.holes, round.holes);
+  const totalScore = caclulateScore(course, round);
   console.log(totalScore, 'totalScore')
   return (
     <Layout title="Round">
@@ -84,7 +84,7 @@ export default function Round() {
             saveHoleScore={saveHoleScore}
           />
         )}
-        <Button pt={2} onClick={() => setShowScoreCard(!showScoreCard)}>
+        <Button mt={2} onClick={() => setShowScoreCard(!showScoreCard)}>
           {toggleText}
         </Button>
       </Box>
