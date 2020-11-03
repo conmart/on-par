@@ -33,7 +33,7 @@ export const caclulateScore = (course, round) => {
     if (totalScore > 0) {
       formattedScore = '+' + totalScore;
     } else if (totalScore < 0) {
-      formattedScore = formattedScore.toString();
+      formattedScore = totalScore.toString();
     }
   }
   return formattedScore;
