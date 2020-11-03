@@ -1,6 +1,12 @@
-import { Box, Flex, Text } from "@chakra-ui/core";
+import { Box, Flex, Text } from '@chakra-ui/core';
+import GolferScore from './GolferScore';
 
-export default function ScoreCard({ course, round, totalScore }) {
+export default function ScoreCard({
+  course,
+  round,
+  totalScore,
+  editHole,
+}) {
   return (
     <Box w="100%">
       <table>
@@ -17,13 +23,17 @@ export default function ScoreCard({ course, round, totalScore }) {
               <tr key={i}>
                 <td>{i + 1}</td>
                 <td>{par}</td>
-                <td>{round?.holes[i].score}</td>
+                <GolferScore
+                  par={par}
+                  score={round?.holes[i].score}
+                  editHole={() => editHole(i)}
+                />
               </tr>
             );
           })}
         </tbody>
       </table>
-      <Flex justify='space-between'>
+      <Flex justify="space-between">
         <Text>Total Score:</Text>
         <Text>{totalScore}</Text>
       </Flex>

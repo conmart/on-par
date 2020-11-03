@@ -55,6 +55,11 @@ export default function Round() {
     }
   };
 
+  const editHole = (holeIndex) => {
+    setCurrentHole(holeIndex);
+    setShowScoreCard(false);
+  }
+
   if (loading || !isGolfer) {
     return (
       <Layout>
@@ -81,7 +86,12 @@ export default function Round() {
         <Text fontSize="2em">{course?.name}</Text>
         <Text>Date: {date}</Text>
         {showScoreCard ? (
-          <ScoreCard course={course} round={round} totalScore={totalScore} />
+          <ScoreCard
+            course={course}
+            round={round}
+            totalScore={totalScore}
+            editHole={editHole}
+          />
         ) : (
           <HoleScore
             course={course}

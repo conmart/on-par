@@ -11,6 +11,16 @@ a {
   text-decoration: none;
 }
 
+table {
+  width: 100%;
+}
+
+td,
+th {
+  border: 1px solid;
+  padding: 5px 2px;
+}
+
 * {
   box-sizing: border-box;
 }

@@ -28,7 +28,7 @@ export default function HoleScore({
     setScore(Math.max(1, currentScore + value));
   };
 
-  const finalHole = currentHole + 1 === course.hole_count;
+  const finalHole = currentHole + 1 >= course.hole_count;
   const buttonText = finalHole ? 'Finish Round' : 'Next Hole';
 
   return (
