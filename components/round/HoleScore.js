@@ -28,6 +28,9 @@ export default function HoleScore({
     setScore(Math.max(1, currentScore + value));
   };
 
+  const finalHole = currentHole + 1 === course.hole_count;
+  const buttonText = finalHole ? 'Finish Round' : 'Next Hole';
+
   return (
     <Box>
       <Flex justify="space-around" py={3}>
@@ -65,7 +68,7 @@ export default function HoleScore({
           icon="triangle-down"
         />
       </Flex>
-      <Button onClick={() => saveHoleScore(score)}>Next Hole</Button>
+      <Button onClick={() => saveHoleScore(score)}>{buttonText}</Button>
     </Box>
   );
 }

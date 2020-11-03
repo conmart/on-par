@@ -23,8 +23,8 @@ export default function ScoreCard({ course, round, totalScore }) {
           })}
         </tbody>
       </table>
-      <Flex>
-        <Text>Total Score</Text>
+      <Flex justify='space-between'>
+        <Text>Total Score:</Text>
         <Text>{totalScore}</Text>
       </Flex>
     </Box>

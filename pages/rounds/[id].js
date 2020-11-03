@@ -8,16 +8,17 @@ import ScoreCard from '../../components/round/ScoreCard';
 import HoleScore from '../../components/round/HoleScore';
 import { caclulateScore, findNextHole } from '../../services/helpers';
 
+// Valid url: http://localhost:3000/rounds/yDHnYyV7FmC5p8ktSHVt
+
 export default function Round() {
   const { resource: round, loading, error } = useResourceFromQuery(true);
   const { currentUser } = useCurrentUser();
   const [course, setCourse] = useState(null);
   const [currentHole, setCurrentHole] = useState(0);
-  const [showScoreCard, setShowScoreCard] = useState(false);
+  const [showScoreCard, setShowScoreCard] = useState(true);
   const isGolfer = round && round.user_id === currentUser?.uid;
 
   useEffect(() => {
-    console.log('affected')
     if (round) {
       getSingleCourse(round.course_id).then((course) => setCourse(course));
     }
@@ -27,27 +28,32 @@ export default function Round() {
     let newHoles = [...round.holes];
     newHoles[currentHole].score = holeScore;
     let updatedRound = { holes: newHoles };
-    const nextHole = findNextHole(newHoles);
-    if (!nextHole) {
-      updatedRound['finished'] = true;
-    }
     try {
       await updateScore(round.id, updatedRound);
-      goToNextHole(nextHole);
+      incrementHole();
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
-  const goToNextHole = (nextHole) => {
-    if (currentHole < 8) {
-      setCurrentHole(currentHole + 1);
-    } else if (nextHole) {
+  const incrementHole = () => {
+    const nextHole = currentHole + 1;
+    if (nextHole < course.hole_count) {
       setCurrentHole(nextHole);
     } else {
       setShowScoreCard(true);
     }
-  }
+  };
+
+  const goToNextHole = () => {
+    const score = round.holes[currentHole].score;
+    if (nextUnscoredHole !== false) {
+      if (score) {
+        setCurrentHole(nextUnscoredHole);
+      }
+      setShowScoreCard(false);
+    }
+  };
 
   if (loading || !isGolfer) {
     return (
@@ -65,13 +71,13 @@ export default function Round() {
     );
   }
 
-  const toggleText = showScoreCard ? 'Enter Score' : 'View ScoreCard';
   const date = new Date(round.created_at).toLocaleDateString();
   const totalScore = caclulateScore(course, round);
-  console.log(totalScore, 'totalScore')
+  const nextUnscoredHole = findNextHole(round.holes);
+
   return (
     <Layout title="Round">
-      <Box w={300} textAlign='center' m='auto'>
+      <Box w={300} textAlign="center" m="auto">
         <Text fontSize="2em">{course?.name}</Text>
         <Text>Date: {date}</Text>
         {showScoreCard ? (
@@ -84,9 +90,19 @@ export default function Round() {
             saveHoleScore={saveHoleScore}
           />
         )}
-        <Button mt={2} onClick={() => setShowScoreCard(!showScoreCard)}>
-          {toggleText}
-        </Button>
+        {showScoreCard ? (
+          <>
+            {nextUnscoredHole !== false && (
+              <Button mt={2} onClick={goToNextHole}>
+                Score Next Hole
+              </Button>
+            )}
+          </>
+        ) : (
+          <Button mt={2} onClick={() => setShowScoreCard(true)}>
+            View ScoreCard
+          </Button>
+        )}
       </Box>
     </Layout>
   );
