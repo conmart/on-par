@@ -1,22 +1,18 @@
 import { Box } from '@chakra-ui/core';
 
 export default function GolferScore({ par, score, editHole }) {
-  const diff = score - par;
+  const diff = score ? score - par : false;
 
   const calcScoreModifier = () => {
     const absDiff = Math.abs(diff);
-    let class1 = 'score-sym';
-    let class2 = '';
-    
+    let class1 = diff < 0 ? 'circle score-sym' : 'score-sym';
+    let class2 = diff < 0 ? 'circle ' : '';
+
     if (absDiff > 1) {
-      class2 = 'score-sym small-sym';
+      class2 += 'score-sym small-sym';
       if (absDiff > 2) {
         class1 += ' solid-border'
       }
-    }
-    if (diff < 0) {
-      class1 += ' circle';
-      class2 += ' circle';
     }
 
     return [class1, class2]

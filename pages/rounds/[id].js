@@ -38,7 +38,7 @@ export default function Round() {
 
   const incrementHole = () => {
     const nextHole = currentHole + 1;
-    if (nextHole < course.hole_count) {
+    if (nextHole < course.hole_count && !roundFinished) {
       setCurrentHole(nextHole);
     } else {
       setShowScoreCard(true);
@@ -58,7 +58,7 @@ export default function Round() {
   const editHole = (holeIndex) => {
     setCurrentHole(holeIndex);
     setShowScoreCard(false);
-  }
+  };
 
   if (loading || !isGolfer) {
     return (
@@ -79,6 +79,7 @@ export default function Round() {
   const date = new Date(round.created_at).toLocaleDateString();
   const totalScore = caclulateScore(course, round);
   const nextUnscoredHole = findNextHole(round.holes);
+  const roundFinished = nextUnscoredHole === false;
 
   return (
     <Layout title="Round">
@@ -98,20 +99,21 @@ export default function Round() {
             round={round}
             currentHole={currentHole}
             saveHoleScore={saveHoleScore}
+            roundFinished={roundFinished}
           />
         )}
-        {showScoreCard ? (
+        {!roundFinished && (
           <>
-            {nextUnscoredHole !== false && (
+            {showScoreCard ? (
               <Button mt={2} onClick={goToNextHole}>
                 Score Next Hole
               </Button>
+            ) : (
+              <Button mt={2} onClick={() => setShowScoreCard(true)}>
+                View ScoreCard
+              </Button>
             )}
           </>
-        ) : (
-          <Button mt={2} onClick={() => setShowScoreCard(true)}>
-            View ScoreCard
-          </Button>
         )}
       </Box>
     </Layout>

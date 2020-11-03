@@ -14,6 +14,7 @@ export default function HoleScore({
   round,
   currentHole,
   saveHoleScore,
+  roundFinished,
 }) {
   const [score, setScore] = useState('');
 
@@ -29,7 +30,7 @@ export default function HoleScore({
   };
 
   const finalHole = currentHole + 1 >= course.hole_count;
-  const buttonText = finalHole ? 'Finish Round' : 'Next Hole';
+  const buttonText = finalHole || roundFinished ? 'Save Score' : 'Next Hole';
 
   return (
     <Box>
