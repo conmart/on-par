@@ -20,7 +20,30 @@ table {
 td,
 th {
   border: 2px solid;
-  padding: 5px 2px;
+  padding: 7px 2px;
+}
+
+.score-sym {
+  position: absolute;
+  border: 1px solid black;
+  height: 35px;
+  width: 35px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.small-sym {
+  height: 25px;
+  width: 25px;
+}
+
+.solid-border {
+  border: 6px solid black;
 }
 
 * {
