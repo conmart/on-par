@@ -83,7 +83,7 @@ export default function Round() {
 
   return (
     <Layout title="Round">
-      <Box w={300} textAlign="center" m="auto">
+      <Box w={300} textAlign="center" m="auto" pb={100}>
         <Text fontSize="2em">{course?.name}</Text>
         <Text>Date: {date}</Text>
         {showScoreCard ? (
@@ -105,11 +105,15 @@ export default function Round() {
         {!roundFinished && (
           <>
             {showScoreCard ? (
-              <Button mt={2} onClick={goToNextHole}>
+              <Button variantColor="blue" my={2} onClick={goToNextHole}>
                 Score Next Hole
               </Button>
             ) : (
-              <Button mt={2} onClick={() => setShowScoreCard(true)}>
+              <Button
+                variantColor="blue"
+                my={2}
+                onClick={() => setShowScoreCard(true)}
+              >
                 View ScoreCard
               </Button>
             )}

@@ -31,6 +31,7 @@ export default function HoleScore({
 
   const finalHole = currentHole + 1 >= course.hole_count;
   const buttonText = finalHole || roundFinished ? 'Save Score' : 'Next Hole';
+  const buttonColor = 'teal';
 
   return (
     <Box>
@@ -39,12 +40,13 @@ export default function HoleScore({
         <Text fontSize={26}>Par: {par}</Text>
       </Flex>
       <Text>Your Score:</Text>
-      <Flex direction="column">
+      <Flex direction="column" py={2}>
         <IconButton
           aria-label="increase score"
           size="lg"
           onClick={() => changeScore(1)}
           icon="triangle-up"
+          variantColor={buttonColor}
         />
         <Flex my={3} justify="space-between">
           <NumberInput
@@ -57,8 +59,12 @@ export default function HoleScore({
           >
             <NumberInputField type="number" placeholder={par} />
           </NumberInput>
-
-          <Button w="45%" size="lg" onClick={() => setScore(par)}>
+          <Button
+            variantColor="green"
+            w="45%"
+            size="lg"
+            onClick={() => setScore(par)}
+          >
             Par
           </Button>
         </Flex>
@@ -67,9 +73,12 @@ export default function HoleScore({
           size="lg"
           onClick={() => changeScore(-1)}
           icon="triangle-down"
+          variantColor={buttonColor}
         />
       </Flex>
-      <Button onClick={() => saveHoleScore(score)}>{buttonText}</Button>
+      <Button mt={2} onClick={() => saveHoleScore(score)} variantColor="blue">
+        {buttonText}
+      </Button>
     </Box>
   );
 }

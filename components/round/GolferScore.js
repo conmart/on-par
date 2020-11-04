@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/core';
 export default function GolferScore({ par, score, editHole }) {
   const diff = score ? score - par : false;
 
-  const calcScoreModifier = () => {
+  const styleScoreModifier = () => {
     const absDiff = Math.abs(diff);
     let class1 = diff < 0 ? 'circle score-sym' : 'score-sym';
     let class2 = diff < 0 ? 'circle ' : '';
@@ -18,7 +18,7 @@ export default function GolferScore({ par, score, editHole }) {
     return [class1, class2]
   };
 
-  const [spanClass1, spanClass2] = calcScoreModifier();
+  const [spanClass1, spanClass2] = styleScoreModifier();
 
   return (
     <td onClick={editHole}>
