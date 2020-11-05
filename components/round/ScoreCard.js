@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/core';
+import { Box } from '@chakra-ui/core';
 import GolferScore from './GolferScore';
 
 export default function ScoreCard({ course, round, totalScore, editHole }) {
@@ -28,12 +28,6 @@ export default function ScoreCard({ course, round, totalScore, editHole }) {
           })}
         </tbody>
       </table>
-      <Flex justify="space-between" pt={3}>
-        <Text fontSize={20}>Total Score:</Text>
-        <Text w={126} fontSize={20} fontWeight="bold">
-          {totalScore}
-        </Text>
-      </Flex>
     </Box>
   );
 }

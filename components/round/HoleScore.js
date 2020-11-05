@@ -39,7 +39,7 @@ export default function HoleScore({
         <Text fontSize={26}>Hole {currentHole + 1}</Text>
         <Text fontSize={26}>Par: {par}</Text>
       </Flex>
-      <Text>Your Score:</Text>
+      <Text>Enter Your Score</Text>
       <Flex direction="column" py={2}>
         <IconButton
           aria-label="increase score"

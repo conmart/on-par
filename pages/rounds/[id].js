@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Text } from '@chakra-ui/core';
+import { Box, Button, Flex, Text } from '@chakra-ui/core';
 import Layout from '../../components/Layout';
 import { useResourceFromQuery } from '../../services/useResourceFromQuery';
 import { useCurrentUser } from '../../services/auth';
@@ -7,6 +7,7 @@ import { getSingleCourse, updateScore } from '../../services/firebase';
 import ScoreCard from '../../components/round/ScoreCard';
 import HoleScore from '../../components/round/HoleScore';
 import { caclulateScore, findNextHole } from '../../services/helpers';
+import RoundFooter from '../../components/round/RoundFooter';
 
 // Valid url: http://localhost:3000/rounds/yDHnYyV7FmC5p8ktSHVt
 
@@ -83,8 +84,8 @@ export default function Round() {
 
   return (
     <Layout title="Round">
-      <Box w={300} textAlign="center" m="auto" pb={100}>
-        <Text fontSize="2em">{course?.name}</Text>
+      <Box w={280} textAlign="center" m="auto" pb={200}>
+        <Text fontSize={26}>{course?.name}</Text>
         <Text>Date: {date}</Text>
         {showScoreCard ? (
           <ScoreCard
@@ -102,23 +103,13 @@ export default function Round() {
             roundFinished={roundFinished}
           />
         )}
-        {!roundFinished && (
-          <>
-            {showScoreCard ? (
-              <Button variantColor="blue" my={2} onClick={goToNextHole}>
-                Score Next Hole
-              </Button>
-            ) : (
-              <Button
-                variantColor="blue"
-                my={2}
-                onClick={() => setShowScoreCard(true)}
-              >
-                View ScoreCard
-              </Button>
-            )}
-          </>
-        )}
+          <RoundFooter
+            goToNextHole={goToNextHole}
+            roundFinished={roundFinished}
+            showScoreCard={showScoreCard}
+            setShowScoreCard={setShowScoreCard}
+            totalScore={totalScore}
+          />
       </Box>
     </Layout>
   );
