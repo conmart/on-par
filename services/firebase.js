@@ -7,8 +7,8 @@ import { firebaseConfig } from './firebaseConfig';
 try {
   firebase.initializeApp(firebaseConfig);
 } catch (err) {
-  // we skip the "already exists" message which is
-  // not an actual error when we're hot-reloading
+  // skip the "already exists" message which is
+  // not an actual error when hot-reloading
   if (!/already exists/.test(err.message)) {
     console.error('Firebase initialization error', err.stack);
   }
@@ -49,12 +49,28 @@ export const getSingleCourse = async (courseId) => {
   return course.data();
 };
 
+export const getUserCourses = async (uid) => {
+  const courses = await db
+    .collection('courses')
+    .where('author_id', '==', uid)
+    .get();
+  return buildResourceList(courses);
+};
+
 // Rounds
 export const getSingleRound = async (roundId) => {
   const round = await db.collection('rounds').doc(roundId).get();
   return round.data();
-}
+};
+
+export const getUserRounds = async (uid) => {
+  const rounds = await db
+    .collection('rounds')
+    .where('user_id', '==', uid)
+    .get();
+  return buildResourceList(rounds);
+};
 
 export const updateScore = async (roundId, newData) => {
   await db.collection('rounds').doc(roundId).update(newData);
-}
+};

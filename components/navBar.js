@@ -18,7 +18,7 @@ export default function NavBar() {
     setLoading(true);
     await signUserOut();
     setLoading(false);
-  }
+  };
 
   return (
     <Flex position="sticky" top={0} bg="green.500" p={4} zIndex={2}>
@@ -36,15 +36,17 @@ export default function NavBar() {
         </NextLink>
         {currentUser ? (
           <Flex>
-            <Button
-              onClick={() => console.log('clicked profile')}
-              variant="link"
-              mr={2}
-              p={2}
-              color="white"
-            >
-              Profile
-            </Button>
+            <NextLink href="/profile">
+              <Button
+                as={Link}
+                variant="link"
+                mr={2}
+                p={2}
+                color="white"
+              >
+                Profile
+              </Button>
+            </NextLink>
             <Button variantColor="blue" onClick={signOut} isLoading={loading}>
               Sign Out
             </Button>

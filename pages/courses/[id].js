@@ -32,6 +32,7 @@ export default function Course() {
       user_id: currentUser.uid,
       course_id: course.id,
       created_at: Date.now(),
+      course_name: course.name,
       holes: new Array(course.hole_count).fill({ score: '' })
     };
     try {

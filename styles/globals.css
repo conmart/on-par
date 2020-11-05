@@ -11,14 +11,14 @@ a {
   text-decoration: none;
 }
 
-table {
+.score-card {
   width: 100%;
   border: 2px solid;
   font-size: 20px;
 }
 
-td,
-th {
+.score-card td,
+.score-card th {
   border: 2px solid;
   padding: 7px 2px;
 }

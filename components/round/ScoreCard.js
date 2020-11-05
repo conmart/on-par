@@ -4,7 +4,7 @@ import GolferScore from './GolferScore';
 export default function ScoreCard({ course, round, totalScore, editHole }) {
   return (
     <Box w="100%" pt={2}>
-      <table>
+      <table className='score-card'>
         <thead>
           <tr>
             <th>Hole</th>
