@@ -19,6 +19,7 @@ export default function Profile() {
   }, [currentUser]);
 
   console.log(courses, 'user courses')
+  console.log(rounds, 'found Rounds')
 
   return (
     <Layout>

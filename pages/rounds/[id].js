@@ -9,8 +9,6 @@ import HoleScore from '../../components/round/HoleScore';
 import { caclulateScore, findNextHole } from '../../services/helpers';
 import RoundFooter from '../../components/round/RoundFooter';
 
-// Valid url: http://localhost:3000/rounds/yDHnYyV7FmC5p8ktSHVt
-
 export default function Round() {
   const { resource: round, loading, error } = useResourceFromQuery(true);
   const { currentUser } = useCurrentUser();
