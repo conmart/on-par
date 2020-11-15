@@ -12,7 +12,7 @@ export default function RoundFooter({
       bg="gray.700"
       position="fixed"
       zIndex={2}
-      bottom='-5px'
+      bottom="-5px"
       pt={2}
       pb={50}
       w="100%"

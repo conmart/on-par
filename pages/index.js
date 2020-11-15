@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <Layout>
       <Text fontSize="2em">All Courses</Text>
-      <table>
+      <table className="reg-table">
         <thead>
           <tr>
             <th>Course Name</th>

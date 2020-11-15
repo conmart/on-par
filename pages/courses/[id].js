@@ -33,14 +33,17 @@ export default function Course() {
       course_id: course.id,
       created_at: Date.now(),
       course_name: course.name,
-      holes: new Array(course.hole_count).fill({ score: '' })
+      holes: new Array(course.hole_count).fill({ score: '' }),
     };
     try {
       const roundRef = await db.collection('rounds').add(round);
       router.push(`/rounds/${roundRef.id}`);
-    } catch(err) {
-      console.log(err, 'newRound Errr')
-      return toast({ ...toastError, description: 'Unable to create new round'});
+    } catch (err) {
+      console.log(err, 'newRound Errr');
+      return toast({
+        ...toastError,
+        description: 'Unable to create new round',
+      });
     }
   };
 
@@ -64,15 +67,15 @@ export default function Course() {
     <Layout>
       {course && (
         <Flex justify="space-between">
-          <Box>
+          <Box textAlign="center">
             <Text fontSize="2em">{course.name}</Text>
             <Text>Created By: {course.author_name}</Text>
-            <Flex>
+            <Flex justify="space-evenly">
               <Text>{course.hole_count} Holes</Text>
               <Text>Total Par: {course.total_par}</Text>
             </Flex>
             <Box>
-              <table>
+              <table className="course-overview">
                 <thead>
                   <tr>
                     <th>Hole</th>

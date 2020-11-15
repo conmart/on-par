@@ -17,11 +17,9 @@ export const findNextHole = (roundHoles) => {
   return false;
 };
 
-export const caclulateScore = (course, round) => {
+export const caclulateScore = (courseHoles, roundHoles) => {
   let formattedScore = 'par';
-  if (course && round) {
-    const { holes: courseHoles } = course;
-    const { holes: roundHoles } = round;
+  if (courseHoles && roundHoles) {
     let totalScore = 0;
     for (let i = 0; i < roundHoles.length; i++) {
       const score = roundHoles[i].score;

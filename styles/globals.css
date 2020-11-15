@@ -11,9 +11,27 @@ a {
   text-decoration: none;
 }
 
-.score-card {
+table {
   width: 100%;
-  border: 2px solid;
+}
+
+.reg-table {
+  font-size: 18px;
+}
+
+.reg-table th, .reg-table td {
+  text-align: left;
+  padding: 5px;
+}
+
+.course-overview td,
+.course-overview th {
+  border: 1px solid;
+  width: 50%;
+  padding: 5px;
+}
+
+.score-card {
   font-size: 20px;
 }
 

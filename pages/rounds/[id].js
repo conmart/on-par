@@ -26,7 +26,8 @@ export default function Round() {
   const saveHoleScore = async (holeScore) => {
     let newHoles = [...round.holes];
     newHoles[currentHole].score = holeScore;
-    let updatedRound = { holes: newHoles };
+    const totalScore = caclulateScore(course?.holes, newHoles);
+    let updatedRound = { holes: newHoles, total_score: totalScore };
     try {
       await updateScore(round.id, updatedRound);
       incrementHole();
@@ -76,7 +77,7 @@ export default function Round() {
   }
 
   const date = new Date(round.created_at).toLocaleDateString();
-  const totalScore = caclulateScore(course, round);
+  const totalScore = caclulateScore(course?.holes, round?.holes);
   const nextUnscoredHole = findNextHole(round.holes);
   const roundFinished = nextUnscoredHole === false;
 
@@ -89,7 +90,6 @@ export default function Round() {
           <ScoreCard
             course={course}
             round={round}
-            totalScore={totalScore}
             editHole={editHole}
           />
         ) : (
